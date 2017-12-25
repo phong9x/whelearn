@@ -1,0 +1,91 @@
+package org.demo.security;
+#set( $entityLowerCase = "" )
+#set( $entityUpperCase = "" )
+#foreach( $entity in $selectedEntities)
+#set( $uncapitalizedEntityName = $fn.uncapitalize($entity.name) )
+#if( ${uncapitalizedEntityName} == "user" || ${uncapitalizedEntityName} == "users" || ${uncapitalizedEntityName} == "member" || ${uncapitalizedEntityName} == "members")
+	#set( $entityLowerCase = ${uncapitalizedEntityName} )
+	#set( $entityUpperCase = $entity.name )
+#end
+#end
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
+import org.demo.web.common.utils.DataUtils;
+#if($entityLowerCase != "")
+import ${ROOT_PKG}.bean.${entityUpperCase};
+import ${ROOT_PKG}.business.service.${entityUpperCase}Service;
+#end
+import ${ROOT_PKG}.bean.UserItem;
+@Component
+public class CustomAuthenticationProvider implements AuthenticationProvider {
+	private static final Logger logger = LoggerFactory
+			.getLogger(CustomAuthenticationProvider.class);
+
+#if($entityLowerCase != "")
+	@Resource
+	private ${entityUpperCase}Service ${entityLowerCase}Service;
+#end
+
+
+	@Override
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException {
+		String username = authentication.getName();
+		String password = DataUtils.getMD5((String) authentication.getCredentials()) ;
+		System.out.println("username: "+username);
+		System.out.println("password: "+password);
+#if($entityLowerCase != "")
+		${entityUpperCase} loginAttemptUser = ${entityLowerCase}Service.login(username, password);
+#end
+		if(loginAttemptUser == null){
+			throw new BadCredentialsException("Username or password not match.");
+		}
+		Collection<? extends GrantedAuthority> authorities;
+		UserItem userOrigin = null; 
+			try {
+					userOrigin.setId(loginAttemptUser.getId());
+					Role role = new Role();
+					switch(loginAttemptUser.getRole()){
+						case 0:
+							role.setName("ROLE_USER");
+							break;
+						case 1:
+							role.setName("ROLE_ADMIN");
+							break;
+					}
+					List<Role> roles = new ArrayList<Role>();
+	    	        roles.add(role);
+	    	        userOrigin.setAuthorities(roles);
+				
+			} catch (UsernameNotFoundException e) {
+				logger.info(e.toString());
+				throw new UsernameNotFoundException(e.getMessage());
+			} catch (BadCredentialsException e) {
+				logger.info(e.toString());
+				throw new BadCredentialsException(e.getMessage());
+			} catch (Exception e) {
+				logger.info(e.toString());
+				throw new RuntimeException(e.getMessage());
+			}
+		authorities = userOrigin.getAuthorities();
+		return new UsernamePasswordAuthenticationToken(userOrigin, password, authorities);
+	}
+
+	@Override
+	public boolean supports(Class<?> arg0) {
+		return true;
+	}
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	<definition name="default" template="/WEB-INF/layouts/user_layout.jspx">
+	</definition>
+	<definition name="admin" template="/WEB-INF/layouts/admin_layout.jspx">
+	</definition>
+	<definition name="admin_login" template="/WEB-INF/layouts/admin_login.jspx">
+	</definition>
+	<definition name="user_login" template="/WEB-INF/layouts/user_login.jspx">
+	</definition>
+</tiles-definitions>

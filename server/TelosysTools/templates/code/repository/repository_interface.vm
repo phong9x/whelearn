@@ -1,0 +1,100 @@
+#if( $entity.hasCompositePrimaryKey() )
+#set( $entityKeyType = ${entity.name} + "EntityKey" )
+#else
+#set( $entityKeyType = ${entity.keyAttributes[0].formattedType(0)} )
+#end
+## Data fields = fields not in Primary Key and not in selected Links    
+#set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY, $const.NOT_IN_SELECTED_LINKS ) )
+##--------------------------------------------------------------------------------------------------------
+package ${target.javaPackageFromFolder(${SRC})};
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import ${ENTITY_PKG}.jpa.${entity.name}Entity;
+#if ( $entity.hasCompositePrimaryKey() )
+import ${ENTITY_PKG}.jpa.${entityKeyType};
+#end
+#set( $username =   "" )
+#set( $mail =   "" )
+#set( $password = "" )
+#set( $bean = "" )
+#set( $queryIsDelete = "")
+#set( $whereIsDelete = "")
+#set( $uncapitalizedEntityName = $fn.uncapitalize($entity.name) )
+#set( $name =   "" )
+/**
+ * Repository : ${entity.name}.
+ */
+public interface ${entity.name}JpaRepository extends PagingAndSortingRepository<${entity.name}Entity, ${entityKeyType}> {
+#foreach( $field in $dataFields )
+#if( $field.formattedName(0) == "isDelete" )
+	#set( $queryIsDelete = 'and u.'+$field.formattedName(0) +' = 0')
+	#set( $whereIsDelete = 'Where u.'+$field.formattedName(0) +' = 0')
+#end
+#end
+	@Query(
+			"Select u From ${entity.name}Entity u $whereIsDelete"
+			)
+	Page<${entity.name}Entity> listPaging(Pageable pageable);
+
+#foreach( $field in $dataFields )
+#if( $field.formattedName(0) == "isDelete" )
+	@Modifying
+	@Query(
+			value="UPDATE $fn.toLowerCase($entity.name) SET is_delete = 1 WHERE id = ?1",nativeQuery=true
+			)
+	void update_isDelete(Integer id);
+#end
+#if( $field.formattedName(0) == "userId" )
+	@Query(
+			"Select u From ${entity.name}Entity u Where u.userId = ?1 $queryIsDelete"
+			)
+	Page<${entity.name}Entity> listPagingByUserId( Integer userId, Pageable pageable);
+
+#end
+#end
+#if( ${uncapitalizedEntityName} == "user" || ${uncapitalizedEntityName} == "users" || ${uncapitalizedEntityName} == "member" || ${uncapitalizedEntityName} == "members")
+#foreach( $field in ${entity.attributes} )
+#if(  $field.formattedName(0) == "name" ||  $field.formattedName(0) == "username"   )
+	#set( $username =   $field.formattedName(0)) 
+#end
+#if(  $field.formattedName(0) == "email"   )
+	#set( $mail =   $field.formattedName(0)) 
+#end
+#if(  $field.formattedName(0) == "password" )
+	#set( $password = $field.formattedName(0))
+#end
+#end
+	#set( $bean = $entity.name)
+#end
+#set( $entity_name = $fn.uncapitalize($entity.name) )
+#if( ${entity_name} == "user" || ${entity_name} == "users" || ${entity_name} == "member" || ${entity_name} == "members")
+#if($password != "")
+#if($username != "")
+	@Query(
+			"Select u From ${bean}Entity u Where u.$username = ?1 and u.$password = ?2 $queryIsDelete"
+			)
+	${bean}Entity login(String ${username}, String ${password});
+#elseif($mail != "")
+	@Query(
+			"Select u From ${bean}Entity u Where u.$username = ?1 and u.$password = ?2 $queryIsDelete"
+			)
+	${bean}Entity login(String ${mail}, String ${password});
+#end
+#end
+#end
+
+#foreach( $field in $dataFields )
+#if(  $field.formattedName(0) == "name" ||  $field.formattedName(0) == "title" || $field.formattedName(0) == "username" 
+|| $field.formattedName(0) == "fullname" || $field.formattedName(0) == "nickname" || $field.formattedName(0) == "email")
+	@Query(
+			"Select u From ${entity.name}Entity u Where u.${field.formattedName(0)} like ?1 $queryIsDelete"
+			)
+	Page<${entity.name}Entity> findBy$fn.capitalize($field.formattedName(0))(String $field.formattedName(0), Pageable pageable);
+#end
+#end
+}

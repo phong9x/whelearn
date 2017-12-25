@@ -1,0 +1,151 @@
+#set( $_ = "$" )
+##--------------------------------------------------------------------------------------------------------
+<div xmlns:s="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+	<s:message var="app_name" code="application_name" htmlEscape="false" />
+	<s:message var="title" code="welcome_titlepane" arguments="${_}{app_name}" htmlEscape="false" />
+    <div class="container">
+	<h3>
+			<s:message code="welcome_h3" arguments="${_}{app_name}" />
+	</h3>
+ 	<div class="feature">
+      <div class="feature-product"><s:message code="empty_message"/></div>
+      <div class="feature-corporate"><s:message code="empty_message"/></div>
+    </div>
+
+    <div class="product-category">
+      <div class="container">
+        <div class="product-category-title"><s:message code="product.title" /></div>
+        <table class="product-category-table">
+          <tbody>
+            <tr>
+              <td style="width:162px">
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell print green"><s:message code="category.print" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell print-1ply black"><s:message code="category.print_onefly" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell print-2ply"><s:message code="category.print_twofly" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell print-baby"><s:message code="category.print_baby" /></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell embossed"><s:message code="category.embossed" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell embossed-1ply disable"><s:message code="category.embossed_onefly" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell embossed-2ply disable"><s:message code="category.embossed_twofly" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell disable"><s:message code="category.embossed_none" /></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="sep"><s:message code="empty_message" /></div>
+        <table class="product-category-table">
+          <tbody>
+            <tr>
+              <td style="width:162px">
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell pink"><s:message code="category.pattern" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell black"><s:message code="category.pattern_animal" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell"><s:message code="category.pattern_flower" /></div>
+                </div>
+              </td>
+              <td> 
+                <div class="pct-cell-wrapper">
+                  <div class="pct-cell"><s:message code="category.pattern_embossed" /></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+	 <s:url var="url_home_goto" value="/" />
+     <div class="NCL">
+      <div class="container">
+        <div class="NCL-row row">
+          <div class="NCL-notice col-md-4">
+            <div class="NCL-title"><s:message code="block.notice" /><a href="${_}{url_home_goto}">
+                <div class="btn-more"><s:message code="empty_message" /></div></a></div>
+            <div class="NCL-notice-table container-fluid">
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (1)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (2)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (3)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (4)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (5)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+              <div class="NCL-notice-table-row row">
+                <div class="NCL-notice-table-col-1 col-xs-7"> <a href="http://">A very long title that no one want to see (6)</a></div>
+                <div class="NCL-notice-table-col-2 col-xs-5 text-center">2015.05.06</div>
+              </div>
+            </div>
+          </div>
+          <div class="NCL-contact col-md-4">
+            <div class="NCL-title"><s:message code="block.contact_us"/></div>
+            <div class="NCL-contact-box">
+              <div class="misc-shortline misc-marbot16">abc</div><br /><span class="misc-fs16">lorem ispum</span><br /><span class="misc-fs16">sit asmet</span>
+            </div>
+          </div>
+          <div class="NCL-location col-md-4">
+            <div class="NCL-title"><s:message code="block.location" /></div>
+            <div class="NCL-location-box"><s:message code="empty_message" /></div>
+            <div class="NCL-location-text">
+              <p></p><s:message code="block.location_title_1" /><br /> 
+              <s:message code="block.location_title_2" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	</div> <!-- /container -->
+</div>

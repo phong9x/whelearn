@@ -1,0 +1,82 @@
+Update date : Sat Apr 15 11:02:53 ICT 2017
+ 
+ Table 'bank_info' found in repository
+ (=) table 'bank_info' unchanged
+ 
+ Table 'category' found in repository
+ (=) table 'category' unchanged
+ 
+ Table 'category_count' found in repository
+ (=) table 'category_count' unchanged
+ 
+ Table 'comment' found in repository
+ (=) table 'comment' unchanged
+ 
+ Table 'company' found in repository
+ (=) table 'company' unchanged
+ 
+ Table 'content' found in repository
+ (=) table 'content' unchanged
+ 
+ Table 'content_related' found in repository
+ (=) table 'content_related' unchanged
+ 
+ Table 'contents_recom' found in repository
+ (=) table 'contents_recom' unchanged
+ 
+ Table 'coupon' found in repository
+ (=) table 'coupon' unchanged
+ 
+ Table 'coupon_use' found in repository
+ (=) table 'coupon_use' unchanged
+ 
+ Table 'event' found in repository
+ (=) table 'event' unchanged
+ 
+ Table 'faq' found in repository
+ (=) table 'faq' unchanged
+ 
+ Table 'keyword' found in repository
+ (=) table 'keyword' unchanged
+ 
+ Table 'keyword_program' found in repository
+ (=) table 'keyword_program' unchanged
+ 
+ Table 'keyword_user' found in repository
+ (=) table 'keyword_user' unchanged
+ 
+ Table 'likes' found in repository
+ (=) table 'likes' unchanged
+ 
+ Table 'notice' found in repository
+ (=) table 'notice' unchanged
+ 
+ Table 'program' found in repository
+ (=) table 'program' unchanged
+ 
+ Table 'program_register' found in repository
+ (=) table 'program_register' unchanged
+ 
+ Table 'program_view' found in repository
+ (=) table 'program_view' unchanged
+ 
+ Table 'purchase' found in repository
+ (=) table 'purchase' unchanged
+ 
+ Table 'push' found in repository
+ (=) table 'push' unchanged
+ 
+ Table 'qa' found in repository
+ (=) table 'qa' unchanged
+ 
+ Table 'question_answer' found in repository
+ (=) table 'question_answer' unchanged
+ 
+ Table 'setting' found in repository
+ (=) table 'setting' unchanged
+ 
+ Table 'time_learn' found in repository
+ (=) table 'time_learn' unchanged
+ 
+ Table 'user' found in repository
+ (=) table 'user' unchanged

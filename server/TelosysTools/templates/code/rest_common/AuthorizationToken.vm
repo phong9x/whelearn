@@ -1,0 +1,52 @@
+package ${ROOT_PKG}.rest.common;
+#set( $userEntityName ="" )
+#set( $userName = "" )
+#set( $uncapitalizedEntityName = "" )
+#foreach( $field in $selectedEntities )
+#set( $uncapitalizedEntityName = $fn.uncapitalize($field.name) )
+#if( ${uncapitalizedEntityName} == "user" || ${uncapitalizedEntityName} == "users" || ${uncapitalizedEntityName} == "member" || ${uncapitalizedEntityName} == "members")
+		#set( $userEntityName = $field.name )
+		#set( $userName = $fn.uncapitalize($field.name) )
+#end
+#end
+import ${ROOT_PKG}.bean.$userEntityName;
+import ${ROOT_PKG}.bean.UserItem;
+import ${ROOT_PKG}.web.common.utils.EncryptionUtils;
+
+
+public class AuthorizationToken {
+	public static void main(String[] args){
+	}
+	public static String generateTokenMobile($userEntityName user){
+		UserItem u =new UserItem();
+		u.setId(user.getId());
+		u.setRole("user");
+		return EncryptionUtils.jwtBuild(u);
+	}
+	
+	public static UserItem convertToObject(String token){
+		try {
+			return EncryptionUtils.jwtParse(token, UserItem.class);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static boolean checkLogin(String token){
+		try {
+			UserItem u= EncryptionUtils.jwtParse(token, UserItem.class);
+			if(u!=null){
+				return true;
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+		
+	}
+	
+
+	
+}

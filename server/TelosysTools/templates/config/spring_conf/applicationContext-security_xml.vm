@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<b:beans xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security.xsd 
+	http://www.springframework.org/schema/security/oauth 
+	http://www.springframework.org/schema/security/spring-security-oauth.xsd 
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:component-scan base-package="${ROOT_PKG}" use-default-filters="false">
+		<context:include-filter expression="org.springframework.stereotype.Service" type="annotation" />
+		<context:include-filter expression="org.springframework.stereotype.Repository" type="annotation" />
+	</context:component-scan>
+	
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled="true"/>
+		<security:form-login login-page="/" 
+							 username-parameter="username"
+							 password-parameter="password"
+							 login-processing-url="/check_login" 
+							 authentication-success-handler-ref="signinSuccessHandler"
+							 authentication-failure-handler-ref="signinFailureHandler"
+							 default-target-url="/check" 
+							 always-use-default-target="false" />
+		<security:logout invalidate-session="true"
+						 logout-success-url="/"
+						 logout-url="/logout" />
+
+		<security:access-denied-handler ref="accessFailureHandler" />
+		<security:intercept-url pattern="/" access="hasRole('ROLE_USER')"/>	
+		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>		
+		<!-- for smart editor -->
+		<security:headers>
+			<security:frame-options policy="SAMEORIGIN" />
+		</security:headers>
+	</security:http>
+	
+	<beans:bean id="signinSuccessHandler" class="${ROOT_PKG}.security.SigninSuccessHandler" />
+	<beans:bean id="signinFailureHandler" class="${ROOT_PKG}.security.SigninFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/admin?error=true" />
+	</beans:bean>
+	<beans:bean id="accessFailureHandler" class="${ROOT_PKG}.security.AccessFailureHandler">
+		<beans:property name="errorPage" value="/403" />
+	</beans:bean>
+	<beans:bean id="customAuthenticationProvider" class="${ROOT_PKG}.security.CustomAuthenticationProvider" />
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+</b:beans>

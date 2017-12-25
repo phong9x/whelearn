@@ -1,0 +1,17 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:tiles="http://tiles.apache.org/tags-tiles"
+	xmlns:spring="http://www.springframework.org/tags">
+<jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:directive.page pageEncoding="UTF-8" />
+<c:set value="/theme" var="theme"><jsp:text/></c:set>
+<link rel="stylesheet" type="text/css" href="${theme}/libs/metronic-admin/global/plugins/bootstrap/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="${theme}/libs/metronic-admin/global/css/components.css"/>
+<script type="text/javascript" src="${theme}/libs/metronic-admin/global/plugins/jquery.min.js"><jsp:text/></script>
+<script type="text/javascript" src="${theme}/libs/metronic-admin/global/plugins/bootstrap/js/bootstrap.min.js"><jsp:text/></script>
+
+<tiles:insertAttribute name="body">&#160;</tiles:insertAttribute>
+
+</html>
